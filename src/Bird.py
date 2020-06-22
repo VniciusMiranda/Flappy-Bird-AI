@@ -1,5 +1,5 @@
 from config import *
-
+from Exceptions import InvalidBirdCoordinateException
 
 
 class Bird:
@@ -18,6 +18,15 @@ class Bird:
         :param x: moving to the right becomes more negative, moving to the left more positive
         :param y: if moving upwards becomes more negative, moving downwards more positive
         """
+
+        # the bird must not begin the game out of the screen
+        if x > WIN_WIDTH or x < 0:
+            raise InvalidBirdCoordinateException(f"invalid X coordinate on the __init__ method\nx: {x}")
+
+        if y > WIN_HEIGHT or y < 0:
+            raise InvalidBirdCoordinateException(f"invalid Y coordinate on the __init__ method\ny: {y}")
+
+
         # coordinates
         self.x = x
         self.y = y
@@ -102,10 +111,13 @@ class Bird:
         :param distance: double -> resulting from the free fall quadratic formula
         :return: nothing
         """
+
+        # while the bird is going up(distance < 0), keep the rotation to the max level
         if distance < 0:
             if self.inclination < self.MAX_ROTATION:
                 self.inclination = self.MAX_ROTATION
 
+        # if the bird is going down rotate the bird to point it towards the ground
         else:
             if self.inclination > -90:
                 self.inclination -= self.ROT_VEL
@@ -144,4 +156,8 @@ class Bird:
 
 
     def getMask(self):
+        """
+        Get the mask object of the current image of the bird.
+        :return: Mask object from pygame
+        """
         return pygame.mask.from_surface(self.image)

@@ -4,8 +4,13 @@ import os
 from Exceptions import CouldNotLoadImageException
 
 
-# all images will be transform to 2 times the original size when loaded
 def loadImage( directoryPath : str, fileName : str):
+    """
+    Loads images using pygame.
+    :param directoryPath: str
+    :param fileName: str
+    :return: pygame image object
+    """
     image = pygame.image.load(
             os.path.join(directoryPath + fileName))
 

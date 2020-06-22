@@ -1,4 +1,5 @@
 from config import *
+from Exceptions import InvalidPipeCoordinateException
 import random
 
 
@@ -12,6 +13,10 @@ class Pipe:
         Pipe class is also  both the top pipe and the bottom pipe.
         :param x: double
         """
+        if x < 0:
+            raise InvalidPipeCoordinateException
+
+
         self.x = x
         self.height = 0
 

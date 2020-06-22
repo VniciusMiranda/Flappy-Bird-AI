@@ -14,6 +14,9 @@ class Base:
         but I think it was the right decision :).
         :param y: double or integer
         """
+
+
+
         self.y = y
 
         # the
