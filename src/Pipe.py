@@ -63,8 +63,5 @@ class Pipe:
         topOverlapPoint = birdMask.overlap(topMask, topOffset)
 
         # if there is a collision return true, otherwise false
-        if bottomOverlapPoint or topOverlapPoint:
-            return True
-        else:
-            return False
+        return True if bottomOverlapPoint or topOverlapPoint else False
 
