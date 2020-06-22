@@ -90,9 +90,7 @@ class Bird:
 
         self.image = self.IMAGES[self.image_count]
 
-        rotation = self.rotate()
-
-        win.blit(rotation["rotatedImage"], rotation["rect"].topleft)
+        self.rotate(win)
 
 
 
@@ -116,7 +114,7 @@ class Bird:
 
 
 
-    def rotate(self):
+    def rotate(self, win):
         """
         Rotates bird around the center and not the left corner.
         :return: nothing
@@ -128,7 +126,7 @@ class Bird:
         new_rect = rotate_image.get_rect(
             center=self.image.get_rect(topleft = (self.x, self.y)).center)
 
-        return {"rotatedImage": rotate_image, "rect": new_rect}
+        win.blit(rotate_image, new_rect.topleft)
 
 
 

@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
         WIN.blit(BG_IMG, (0, 0))
         bird.render(WIN)
-
+        bird.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False

@@ -3,9 +3,9 @@ from util import loadImage
 import os
 import pygame
 
+
 """
-In this file all the configuration of the constant values is made
-and the import statements of third part modules are here.
+In this file all the configuration of the constant values is made.
 """
 pygame.init()
 
