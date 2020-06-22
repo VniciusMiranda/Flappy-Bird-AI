@@ -3,6 +3,13 @@ from config import *
 
 
 
+
+def drawWindow(win, bird):
+    win.blit(BG_IMG, (0, 0))
+    bird.render(win)
+    pygame.display.update()
+
+
 if __name__ == "__main__":
     run = True
     clock = pygame.time.Clock()
@@ -11,14 +18,12 @@ if __name__ == "__main__":
     while run:
         clock.tick(30)
 
-        WIN.blit(BG_IMG, (0, 0))
-        bird.render(WIN)
-        bird.update()
+        drawWindow(WIN, bird)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
 
 
-        pygame.display.update()
 
     pygame.quit()

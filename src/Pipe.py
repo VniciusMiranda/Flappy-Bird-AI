@@ -8,7 +8,8 @@ class Pipe:
 
     def __init__(self, x):
         """
-        Pipe only have x value because the height will be random
+        Pipe only have x value because the height will be random.
+        Pipe class is also  both the top pipe and the bottom pipe.
         :param x: double
         """
         self.x = x
@@ -24,6 +25,11 @@ class Pipe:
         self.setHeight()
 
     def setHeight(self):
+        """
+        Sets the height of the top pipe and the bottom pipe
+        randomly
+        :return:  nothing
+        """
         self.height = random.randrange(50, 450)
         self.top = self.height - self.PIPE_TOP.get_height()
         self.bottom = self.height + self.GAP
@@ -35,3 +41,30 @@ class Pipe:
     def draw(self, win):
         win.blit(self.PIPE_TOP, (self.x, self.top))
         win.blit(self.PIPE_BOTTOM, (self.x, self.bottom))
+
+    def collide(self, bird):
+        """
+        Implementation of pixel perfect collision using pygame masks.
+        :param bird: Bird
+        :return:
+        """
+
+        # gets the mask of the images
+        birdMask = bird.getMask()
+        topMask = self.PIPE_TOP.get_mask()
+        bottomMask = self.PIPE_BOTTOM.get_mask()
+
+        # gets offset
+        topOffset = (self.x - bird.x, self.top - round(bird.y))
+        bottomOffset = (self.x - bird.x, self.bottom - round(bird.y))
+
+        # tests if the masks overlap
+        bottomOverlapPoint = birdMask.overlap(bottomMask, bottomOffset)
+        topOverlapPoint = birdMask.overlap(topMask, topOffset)
+
+        # if there is a collision return true, otherwise false
+        if bottomOverlapPoint or topOverlapPoint:
+            return True
+        else:
+            return False
+

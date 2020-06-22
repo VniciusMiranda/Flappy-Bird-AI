@@ -8,7 +8,6 @@ class Bird:
     IMAGES = BIRD_IMGS
     MAX_ROTATION = 25
     ROT_VEL = 20
-    ANIMATION_VEL = 5
 
     def __init__(self, x, y):
         """
