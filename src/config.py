@@ -15,5 +15,5 @@ PIPE_IMG = loadImage(IMGS_PATH, "pipe.png")
 BG_IMG = loadImage(IMGS_PATH, "bg.png")
 BASE_IMG = loadImage(IMGS_PATH, "base.png")
 
-
+GRAVITY = 3
 
