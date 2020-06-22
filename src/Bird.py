@@ -1,6 +1,6 @@
-from .config import BIRD_IMGS, GRAVITY
+from config import *
 
-import pygame
+
 
 class Bird:
 
@@ -57,11 +57,21 @@ class Bird:
         updates the coordinates, tilt and tick_count values of the bird.
         :return: nothing
         """
+
         self.tick_count += 1
 
-        d = self.quadratic_formula()
-        self.y += d
+        d = self.quadratic_formula(self.tick_count)
 
+        # don't let the bird accelerate forever
+        if d >= 16:
+            d  = 16
+
+        # if is still going up, go a little further
+        # it makes the movement of the bird better
+        if d < 0:
+             d -= 2
+
+        self.y += d
         self.tilt(d)
 
 
@@ -73,15 +83,16 @@ class Bird:
         :param win: Window object from pygame module.
         :return:
         """
-        if self.tick_count % 10 == 0:
-            self.image_count += 1
+        self.image_count += 1
 
-        if self.image_count > len(BIRD_IMGS):
+        if self.image_count > len(BIRD_IMGS) - 1:
             self.image_count = 0
+
+        self.image = self.IMAGES[self.image_count]
 
         rotation = self.rotate()
 
-        win.blit(rotation["rotatedImage"], rotation["rect"])
+        win.blit(rotation["rotatedImage"], rotation["rect"].topleft)
 
 
 
@@ -115,14 +126,14 @@ class Bird:
 
         # redefines the rectangle of the rotated image
         new_rect = rotate_image.get_rect(
-            center=self.image.get_rect(topLeft = (self.x, self.y)).center)
+            center=self.image.get_rect(topleft = (self.x, self.y)).center)
 
         return {"rotatedImage": rotate_image, "rect": new_rect}
 
 
 
 
-    def quadratic_formula(self):
+    def quadratic_formula(self, time):
         """
         Computes how much space the bird is moving each unit
         of time.
@@ -130,7 +141,7 @@ class Bird:
         delta_space = velocity*time - (GRAVITY/2)*time²
         :return: double
         """
-        return self.velocity * self.tick_count + (GRAVITY / 2) * self.tick_count ** 2
+        return self.velocity*time + (GRAVITY / 2) * time**2
 
 
 
