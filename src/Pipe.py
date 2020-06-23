@@ -14,7 +14,7 @@ class Pipe:
         :param x: double
         """
         if x < 0:
-            raise InvalidPipeCoordinateException
+            raise InvalidPipeCoordinateException(f"invalid X coordinate on the __init__ method\nx: {x}")
 
 
         self.x = x

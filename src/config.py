@@ -16,15 +16,20 @@ IMGS_PATH = RESOURCES_PATH + "/imgs/"
 
 IMAGES = os.listdir(IMGS_PATH)
 
-# window size
-WIN_WIDTH = 288
-WIN_HEIGHT = 512
+SCALE = 1.3
 
 # resource loading
-BIRD_IMGS = [loadImage(IMGS_PATH, image) for image in IMAGES if "bird" in image]
-PIPE_IMG = loadImage(IMGS_PATH, "pipe.png")
-BG_IMG = loadImage(IMGS_PATH, "bg.png")
-BASE_IMG = loadImage(IMGS_PATH, "base.png")
+BIRD_IMGS = [loadImage(IMGS_PATH, image, SCALE) for image in IMAGES if "bird" in image]
+PIPE_IMG = loadImage(IMGS_PATH, "pipe.png", SCALE)
+BG_IMG = loadImage(IMGS_PATH, "bg.png", SCALE)
+BASE_IMG = loadImage(IMGS_PATH, "base.png",SCALE)
+
+
+# window size
+WIN_WIDTH = BG_IMG.get_width()
+WIN_HEIGHT = BG_IMG.get_height()
+
+
 
 GRAVITY = 3
 

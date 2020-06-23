@@ -14,12 +14,8 @@ class Base:
         but I think it was the right decision :).
         :param y: double or integer
         """
-
-
-
         self.y = y
 
-        # the
         self.x1 = 0
         self.x2 = self.WIDTH
 
@@ -28,4 +24,17 @@ class Base:
         Updates the coordinates and states if there are any.
         :return: nothing
         """
+        # moves the base
+        self.x1 -= self.VELOCITY
+        self.x2 -= self.VELOCITY
+
+        # if the base is out off the screen, moves it to the origin
+        if self.x1 + self.WIDTH < 0:
+            self.x1 = self.x2 + self.WIDTH
+
+        if self.x2 + self.WIDTH < 0:
+            self.x2 = self.x1 + self.WIDTH
+
+
+    def render(self):
         pass
