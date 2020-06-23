@@ -28,7 +28,7 @@ class Base:
         self.x1 -= self.VELOCITY
         self.x2 -= self.VELOCITY
 
-        # if the base is out off the screen, moves it to the origin
+        # if the base is out off the screen, moves it back
         if self.x1 + self.WIDTH < 0:
             self.x1 = self.x2 + self.WIDTH
 
@@ -36,5 +36,11 @@ class Base:
             self.x2 = self.x1 + self.WIDTH
 
 
-    def render(self):
-        pass
+    def render(self, win):
+        """
+        Draws the Base to the screen.
+        :param win: Window object of pygame
+        :return: nothing
+        """
+        win.blit((self.IMAGE), (self.x1, self.y))
+        win.blit((self.IMAGE), (self.x2, self.y))

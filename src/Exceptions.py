@@ -1,5 +1,5 @@
 """
-Might not be really necessary because it's a small personal project,
+Might not be necessary because it's a small personal project,
 but it is good to keep the good practices :)
 """
 class CouldNotLoadImageException(Exception):

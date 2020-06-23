@@ -88,7 +88,7 @@ class Bird:
     def render(self, win):
         """
         Display the bird on the screen.
-        :param win: Window object from pygame module.
+        :param win: Window object from pygame.
         :return:
         """
         self.image_count += 1

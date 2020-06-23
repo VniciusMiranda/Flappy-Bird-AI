@@ -24,12 +24,9 @@ PIPE_IMG = loadImage(IMGS_PATH, "pipe.png", SCALE)
 BG_IMG = loadImage(IMGS_PATH, "bg.png", SCALE)
 BASE_IMG = loadImage(IMGS_PATH, "base.png",SCALE)
 
-
 # window size
 WIN_WIDTH = BG_IMG.get_width()
 WIN_HEIGHT = BG_IMG.get_height()
-
-
 
 GRAVITY = 3
 

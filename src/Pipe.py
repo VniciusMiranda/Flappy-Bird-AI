@@ -32,7 +32,7 @@ class Pipe:
     def setHeight(self):
         """
         Sets the height of the top pipe and the bottom pipe
-        randomly
+        randomly.
         :return:  nothing
         """
         self.height = random.randrange(50, 450)
@@ -51,7 +51,7 @@ class Pipe:
         """
         Implementation of pixel perfect collision using pygame masks.
         :param bird: Bird
-        :return:
+        :return: boolean
         """
 
         # gets the mask of the images

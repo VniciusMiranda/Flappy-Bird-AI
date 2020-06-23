@@ -1,9 +1,6 @@
 from Bird import Bird
 from config import *
 
-
-
-
 def drawWindow(win, bird):
     win.blit(BG_IMG, (0, 0))
     bird.render(win)
