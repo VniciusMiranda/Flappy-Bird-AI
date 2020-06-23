@@ -4,7 +4,7 @@ import random
 
 
 class Pipe:
-    GAP = WIN_WIDTH/2
+    GAP = WIN_WIDTH/2.5
     VELOCITY = 5
 
     def __init__(self, x):
@@ -24,6 +24,7 @@ class Pipe:
         self.bottom = 0
         # flips the original image
         self.PIPE_TOP = pygame.transform.flip(PIPE_IMG, False, True)
+
         self.PIPE_BOTTOM = PIPE_IMG
 
         self.passed = False
@@ -56,12 +57,12 @@ class Pipe:
 
         # gets the mask of the images
         birdMask = bird.getMask()
-        topMask = self.PIPE_TOP.get_mask()
-        bottomMask = self.PIPE_BOTTOM.get_mask()
+        topMask = pygame.mask.from_surface(self.PIPE_TOP)
+        bottomMask = pygame.mask.from_surface(self.PIPE_BOTTOM)
 
         # gets offset
-        topOffset = (self.x - bird.x, self.top - round(bird.y))
-        bottomOffset = (self.x - bird.x, self.bottom - round(bird.y))
+        topOffset = (round(self.x - bird.x), round(self.top - bird.y))
+        bottomOffset = (round(self.x - bird.x), round(self.bottom - bird.y))
 
         # tests if the masks overlap
         bottomOverlapPoint = birdMask.overlap(bottomMask, bottomOffset)
@@ -69,4 +70,7 @@ class Pipe:
 
         # if there is a collision return true, otherwise false
         return True if bottomOverlapPoint or topOverlapPoint else False
+
+    def isOutOfScreen(self):
+        return self.x + self.PIPE_TOP.get_width() < 0
 

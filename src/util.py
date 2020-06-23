@@ -6,7 +6,7 @@ from Exceptions import CouldNotLoadImageException
 
 def loadImage( directoryPath : str, fileName : str, scale=1.0):
     """
-    Loads images using pygame.
+    Loads images using pygame
     :param directoryPath: str
     :param fileName: str
     :return: pygame image object
@@ -16,7 +16,6 @@ def loadImage( directoryPath : str, fileName : str, scale=1.0):
 
     if image is None:
         raise CouldNotLoadImageException(f"could not load image: {fileName}")
-
 
     image = pygame.transform.scale(image,
                                    (round(image.get_width()*scale),

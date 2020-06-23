@@ -16,11 +16,10 @@ IMGS_PATH = RESOURCES_PATH + "/imgs/"
 
 IMAGES = os.listdir(IMGS_PATH)
 
-FPS = 30
+FPS = 23
 CLOCK = pygame.time.Clock()
 
 SCALE = 1.3
-
 
 # resource loading
 BIRD_IMGS = [loadImage(IMGS_PATH, image, SCALE) for image in IMAGES if "bird" in image]
