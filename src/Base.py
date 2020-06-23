@@ -44,3 +44,11 @@ class Base:
         """
         win.blit((self.IMAGE), (self.x1, self.y))
         win.blit((self.IMAGE), (self.x2, self.y))
+
+    def collided(self, bird):
+        """
+        Collision testing with the bird and the base.
+        :param bird: Bird
+        :return: boolean
+        """
+        return bird.image.get_height() + bird.y > self.y

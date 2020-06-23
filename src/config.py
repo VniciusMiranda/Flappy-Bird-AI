@@ -8,7 +8,7 @@ import pygame
 In this file all the configuration of the constant values is made.
 """
 pygame.init()
-
+pygame.font.init()
 
 # path variables
 RESOURCES_PATH = "../resources"
