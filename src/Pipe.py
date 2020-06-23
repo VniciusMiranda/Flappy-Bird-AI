@@ -40,10 +40,10 @@ class Pipe:
         self.bottom = self.height + self.GAP
 
 
-    def move(self):
+    def update(self):
         self.x -= self.VELOCITY
 
-    def draw(self, win):
+    def render(self, win):
         win.blit(self.PIPE_TOP, (self.x, self.top))
         win.blit(self.PIPE_BOTTOM, (self.x, self.bottom))
 
