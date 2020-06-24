@@ -1,5 +1,5 @@
-from util import loadImage
-from GameObject import GameObject
+from game.util import loadImage
+from game.GameObject import GameObject
 
 
 class Base(GameObject):

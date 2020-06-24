@@ -1,5 +1,5 @@
-from GameObject import GameObject
-from util import loadImage
+from game.GameObject import GameObject
+from game.util import loadImage
 import pygame
 import random
 

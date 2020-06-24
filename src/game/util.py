@@ -1,7 +1,11 @@
 import pygame
 import os
 
-from Exceptions import CouldNotLoadImageException
+
+class CouldNotLoadImageException(Exception):
+    def __init__(self, message):
+        super(CouldNotLoadImageException, self).__init__(message)
+
 
 
 def loadImage( directoryPath : str, fileName : str, scale=1.0):

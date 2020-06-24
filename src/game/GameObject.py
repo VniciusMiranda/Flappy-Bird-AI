@@ -10,6 +10,7 @@ class GameObject:
         """
         self.RESOURCES_PATH = "../resources"
 
+
         self.IMGS_PATH = self.RESOURCES_PATH + "/imgs/"
 
         self.RESOURCE_IMAGES = os.listdir(self.IMGS_PATH)

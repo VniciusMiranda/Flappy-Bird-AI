@@ -1,9 +1,9 @@
-from GameObject import GameObject
-from util import loadImage
-from Score import Score
-from Base import Base
-from Bird import Bird
-from Pipe import Pipe
+from game.GameObject import GameObject
+from game.util import loadImage
+from game.Score import Score
+from game.Base import Base
+from game.Bird import Bird
+from game.Pipe import Pipe
 
 import pygame
 
@@ -13,7 +13,7 @@ import pygame
 class Game(GameObject):
 
     FPS = 23
-    SCALE = 1.3
+    SCALE = 1.2
     NUM_PIPES = 4
     GRAVITY = 3
 
@@ -128,10 +128,17 @@ class Game(GameObject):
                     self.bye = True
                     break
 
+
                 # just for testing :)
                 if event.type == pygame.KEYDOWN:
+
+                    # jump with the space bar
                     if event.key == pygame.K_SPACE:
                         self.bird.jump()
+
+                    # quiting with the "q" key
+                    if event.key == pygame.K_q:
+                        self.bye = True
 
             pygame.display.update()
 
