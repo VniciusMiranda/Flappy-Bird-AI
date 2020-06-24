@@ -1,4 +1,3 @@
-from Exceptions import InvalidPipeCoordinateException
 from GameObject import GameObject
 from util import loadImage
 import pygame
@@ -18,9 +17,7 @@ class Pipe(GameObject):
 
         self.SCALE = scale
 
-        self.PIPE_IMG = loadImage(self.IMGS_PATH, "", self.SCALE)
-        if x < 0:
-            raise InvalidPipeCoordinateException(f"invalid X coordinate on the __init__ method\nx: {x}")
+        self.PIPE_IMG = loadImage(self.IMGS_PATH, "pipe.png", self.SCALE)
 
         self.WIN_WIDTH = win_width
 
@@ -59,17 +56,22 @@ class Pipe(GameObject):
 
     def update(self):
         """
-
+        Updates the coordinates and the state of the Pipe
+        object.
         :return: nothing
         """
         self.x -= self.VELOCITY
+
+        # make the pipes cycle infinitely
+        if self.isOutOfScreen():
+            self.x = 700
 
 
 
 
     def render(self, win):
         """
-
+        Renders the pipe on the screen.
         :param win: Window
         :return: nothing
         """

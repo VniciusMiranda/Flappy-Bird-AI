@@ -38,7 +38,7 @@ class Game(GameObject):
 
         # instantiate all the game objects
         self.bird = Bird(self.WIN_WIDTH, self.WIN_HEIGHT, self.SCALE, self.GRAVITY)
-        self.pipes = [Pipe(self.WIN_WIDTH, self.SCALE, i) for i in range(self.NUM_PIPES)]
+        self.pipes = [Pipe(self.WIN_WIDTH, self.SCALE, factor) for factor in range(self.NUM_PIPES)]
         self.base = Base(self.WIN_HEIGHT - self.WIN_HEIGHT/14, self.SCALE)
 
         # instantiate the score variable
@@ -57,17 +57,61 @@ class Game(GameObject):
         :param win: Window
         :return: nothing
         """
-        pass
+        # draws the background
+        win.blit(self.BG_IMG, (0, 0))
+
+        # draws the bird
+        self.bird.render(win)
+
+        # draws the pipes
+        for pipe in self.pipes:
+            pipe.render(win)
+
+        # draws the score and the base
+        self.score.render(win)
+        self.base.render(win)
 
 
 
 
     def update(self):
         """
-
-        :return:
+        Game update method. It updates the state and coordinates of
+        every object of the game.
+        :return: nothing
         """
-        pass
+
+        # update the bird
+        self.bird.update()
+
+        # update the pipes
+        for pipe in self.pipes:
+            pipe.update()
+
+            # sets the pipe.passed back to False
+            # when the pipe completes a cycle
+            if pipe.x > self.bird.x:
+                pipe.passed = False
+
+            # test collision with the pipe
+            if pipe.collide(self.bird):
+                # TODO: make the bird die or something like that
+                print("collided with the pipe")
+
+            # test collision with the ground
+            if self.base.collide(self.bird):
+                # TODO: make the bird die or something like that
+                print("hitted the floor")
+
+
+            # if the bird passed the pipe then congrats!!
+            if not pipe.passed and pipe.x < self.bird.x:
+                pipe.passed = True
+                self.score.value += 1
+
+
+        # update the base
+        self.base.update()
 
 
     def run(self):
@@ -84,7 +128,7 @@ class Game(GameObject):
 
                 # if window is close the game stops
                 if event.type == pygame.QUIT:
-                    bye = True
+                    self.bye = True
                     break
 
                 # just for testing :)

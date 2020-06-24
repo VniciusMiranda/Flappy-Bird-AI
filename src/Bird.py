@@ -1,4 +1,3 @@
-from Exceptions import InvalidBirdCoordinateException
 from util import loadImage
 from GameObject import GameObject
 import pygame
