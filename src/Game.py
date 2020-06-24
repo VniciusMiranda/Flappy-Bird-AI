@@ -13,8 +13,8 @@ import pygame
 class Game(GameObject):
 
     FPS = 23
-    SCALE = 2
-    NUM_PIPES = 2
+    SCALE = 1.3
+    NUM_PIPES = 4
     GRAVITY = 3
 
     def __init__(self):
@@ -86,28 +86,25 @@ class Game(GameObject):
 
         # update the pipes
         for pipe in self.pipes:
+
             pipe.update()
 
-            # sets the pipe.passed back to False
-            # when the pipe completes a cycle
-            if pipe.x > self.bird.x:
-                pipe.passed = False
 
             # test collision with the pipe
             if pipe.collide(self.bird):
                 # TODO: make the bird die or something like that
-                print("collided with the pipe")
+                pass
+
 
             # test collision with the ground
             if self.base.collide(self.bird):
                 # TODO: make the bird die or something like that
-                print("hitted the floor")
+                pass
 
 
             # if the bird passed the pipe then congrats!!
-            if not pipe.passed and pipe.x < self.bird.x:
-                pipe.passed = True
-                self.score.value += 1
+            if pipe.birdPassed(self.bird):
+                self.score.update()
 
 
         # update the base

@@ -25,7 +25,7 @@ class Pipe(GameObject):
 
         # if the initial distance of the pipe needs tp be bigger than the window width
         # the variable factor is passed
-        self.x = self.WIN_WIDTH + factor*(self.WIN_WIDTH / 1.5)
+        self.x = self.WIN_WIDTH + factor*(self.WIN_WIDTH/2)
         self.height = 0
 
         self.top = 0
@@ -65,6 +65,8 @@ class Pipe(GameObject):
         # make the pipes cycle infinitely
         if self.isOutOfScreen():
             self.x = 700
+            self.passed = False
+
 
 
 
@@ -108,3 +110,9 @@ class Pipe(GameObject):
     def isOutOfScreen(self):
         return self.x + self.PIPE_TOP.get_width() < 0
 
+    def birdPassed(self, bird):
+        if not self.passed and self.x < bird.x:
+            self.passed = True
+            return True
+        else:
+            return False
