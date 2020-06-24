@@ -1,15 +1,16 @@
-from config import *
 from Exceptions import InvalidBirdCoordinateException
+from util import loadImage
+from GameObject import GameObject
+import pygame
 
 
-class Bird:
+class Bird(GameObject):
 
     # static variables and constants
-    IMAGES = BIRD_IMGS
     MAX_ROTATION = 25
     ROT_VEL = 20
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, win_width, win_height, scale, gravity):
         """
         The corner of the screen is represented by (0, 0).
         If you go down the y direction "self.y" becomes more positive.
@@ -18,15 +19,22 @@ class Bird:
         :param x: moving to the right becomes more negative, moving to the left more positive
         :param y: if moving upwards becomes more negative, moving downwards more positive
         """
+        super().__init__()
+
+        self.GRAVITY = gravity
+        self.WIN_WIDTH = win_width
+        self.WIN_HEIGHT = win_height
+        self.SCALE = scale
 
         # the bird must not begin the game out of the screen
-        if x > WIN_WIDTH or x < 0:
+        if x > self.WIN_WIDTH or x < 0:
             raise InvalidBirdCoordinateException(f"invalid X coordinate on the __init__ method\nx: {x}")
 
-        if y > WIN_HEIGHT or y < 0:
+        if y > self.WIN_HEIGHT or y < 0:
             raise InvalidBirdCoordinateException(f"invalid Y coordinate on the __init__ method\ny: {y}")
 
 
+        self.IMAGES = [loadImage(self.IMGS_PATH, image, self.SCALE) for image in self.RESOURCE_IMAGES if "bird" in image]
         # coordinates
         self.x = x
         self.y = y
@@ -68,7 +76,7 @@ class Bird:
 
         self.tick_count += 1
 
-        d = self.quadratic_formula(self.tick_count)
+        d = self.quadratic_formula(self.tick_count, self.GRAVITY)
 
         # don't let the bird accelerate forever
         if d >= 16:
@@ -84,7 +92,6 @@ class Bird:
 
 
 
-
     def render(self, win):
         """
         Display the bird on the screen.
@@ -93,7 +100,7 @@ class Bird:
         """
         self.image_count += 1
 
-        if self.image_count > len(BIRD_IMGS) - 1:
+        if self.image_count > len(self.IMAGES) - 1:
             self.image_count = 0
 
         self.image = self.IMAGES[self.image_count]
@@ -142,7 +149,7 @@ class Bird:
 
 
 
-    def quadratic_formula(self, time):
+    def quadratic_formula(self, time, gravity):
         """
         Computes how much space the bird is moving each unit
         of time.
@@ -150,7 +157,7 @@ class Bird:
         delta_space = velocity*time - (GRAVITY/2)*time²
         :return: double
         """
-        return self.velocity*time + (GRAVITY / 2) * time**2
+        return self.velocity*time + (gravity / 2) * time**2
 
 
 

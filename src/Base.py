@@ -1,11 +1,11 @@
-from config import *
+from util import loadImage
+from GameObject import GameObject
 
-class Base:
+
+class Base(GameObject):
     VELOCITY = 5
-    IMAGE = BASE_IMG
-    WIDTH = IMAGE.get_width()
 
-    def __init__(self, y):
+    def __init__(self, y, scale):
         """
         Represents the base of the game, will be moving as
         well, so this class is for encapsulating the methods
@@ -14,7 +14,13 @@ class Base:
         but I think it was the right decision :).
         :param y: double or integer
         """
+        super().__init__()
+
         self.y = y
+
+        self.SCALE = scale
+        self.IMAGE = loadImage(self.IMGS_PATH, "base.png",self.SCALE)
+        self.WIDTH = self.IMAGE.get_width()
 
         self.x1 = 0
         self.x2 = self.WIDTH
@@ -45,7 +51,7 @@ class Base:
         win.blit((self.IMAGE), (self.x1, self.y))
         win.blit((self.IMAGE), (self.x2, self.y))
 
-    def collided(self, bird):
+    def collide(self, bird):
         """
         Collision testing with the bird and the base.
         :param bird: Bird

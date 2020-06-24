@@ -1,21 +1,30 @@
-from config import *
 from Exceptions import InvalidPipeCoordinateException
+from GameObject import GameObject
+from util import loadImage
+import pygame
 import random
 
 
-class Pipe:
-    GAP = WIN_WIDTH/2.5
+class Pipe(GameObject):
     VELOCITY = 5
 
-    def __init__(self, x):
+    def __init__(self, x, win_width, scale):
         """
         Pipe only have x value because the height will be random.
         Pipe class is also  both the top pipe and the bottom pipe.
         :param x: double
         """
+        super().__init__()
+
+        self.SCALE = scale
+
+        self.PIPE_IMG = loadImage(self.IMGS_PATH, "", self.SCALE)
         if x < 0:
             raise InvalidPipeCoordinateException(f"invalid X coordinate on the __init__ method\nx: {x}")
 
+        self.WIN_WIDTH = win_width
+
+        self.GAP = self.WIN_WIDTH/2.5
 
         self.x = x
         self.height = 0
@@ -23,9 +32,9 @@ class Pipe:
         self.top = 0
         self.bottom = 0
         # flips the original image
-        self.PIPE_TOP = pygame.transform.flip(PIPE_IMG, False, True)
+        self.PIPE_TOP = pygame.transform.flip(self.PIPE_IMG, False, True)
 
-        self.PIPE_BOTTOM = PIPE_IMG
+        self.PIPE_BOTTOM = self.PIPE_IMG
 
         self.passed = False
         self.setHeight()
@@ -42,9 +51,18 @@ class Pipe:
 
 
     def update(self):
+        """
+
+        :return: nothing
+        """
         self.x -= self.VELOCITY
 
     def render(self, win):
+        """
+
+        :param win: Window
+        :return: nothing
+        """
         win.blit(self.PIPE_TOP, (self.x, self.top))
         win.blit(self.PIPE_BOTTOM, (self.x, self.bottom))
 
