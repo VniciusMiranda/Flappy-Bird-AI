@@ -10,7 +10,7 @@ class Bird(GameObject):
     MAX_ROTATION = 25
     ROT_VEL = 20
 
-    def __init__(self, x, y, win_width, win_height, scale, gravity):
+    def __init__(self, win_width, win_height, scale, gravity):
         """
         The corner of the screen is represented by (0, 0).
         If you go down the y direction "self.y" becomes more positive.
@@ -26,18 +26,11 @@ class Bird(GameObject):
         self.WIN_HEIGHT = win_height
         self.SCALE = scale
 
-        # the bird must not begin the game out of the screen
-        if x > self.WIN_WIDTH or x < 0:
-            raise InvalidBirdCoordinateException(f"invalid X coordinate on the __init__ method\nx: {x}")
-
-        if y > self.WIN_HEIGHT or y < 0:
-            raise InvalidBirdCoordinateException(f"invalid Y coordinate on the __init__ method\ny: {y}")
-
-
         self.IMAGES = [loadImage(self.IMGS_PATH, image, self.SCALE) for image in self.RESOURCE_IMAGES if "bird" in image]
-        # coordinates
-        self.x = x
-        self.y = y
+
+        # initial coordinates are define in function of the size of the window
+        self.x = self.WIN_WIDTH / 5
+        self.y = self.WIN_HEIGHT - self.WIN_HEIGHT / 2
 
         self.inclination = 0 # how much the bird must tilt
 

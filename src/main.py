@@ -1,9 +1,3 @@
-from config import *
-
-from Bird import Bird
-from Pipe import Pipe
-from Base import Base
-from Score import Score
 
 
 
@@ -80,46 +74,9 @@ def render(win, bird :Bird, pipes, base:Base, score):
 
 
 
-def main():
-
-    # instantiating the objects
-    bird = Bird(WIN_WIDTH/5, WIN_HEIGHT - WIN_HEIGHT/2)
-    pipes = [Pipe(WIN_WIDTH + i*(WIN_WIDTH/1.5)) for i in range(NUM_PIPES)]
-    base = Base(WIN_HEIGHT - WIN_HEIGHT/14)
-    score = Score(initialValue=0, font="comicsans", size=50)
-
-    # game variables
-    bye = False
-
-    # Game Loop
-    while not bye:
-        # defines the FPS of the game
-        CLOCK.tick(FPS)
-
-        # update and render everything
-        update(bird,pipes, base, score)
-        render(WIN, bird, pipes, base, score)
-
-        # listen for events
-        for event in pygame.event.get():
-
-            # if window is close the game stops
-            if event.type == pygame.QUIT:
-                bye = True
-                break
-
-            # just for testing :)
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    bird.jump()
-
-
-        pygame.display.update()
-
-    pygame.quit()
 
 
 
 
 if __name__ == "__main__":
-    main()
+    pass

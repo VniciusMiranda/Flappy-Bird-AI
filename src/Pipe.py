@@ -8,7 +8,7 @@ import random
 class Pipe(GameObject):
     VELOCITY = 5
 
-    def __init__(self, x, win_width, scale):
+    def __init__(self, win_width, scale, factor=0):
         """
         Pipe only have x value because the height will be random.
         Pipe class is also  both the top pipe and the bottom pipe.
@@ -26,7 +26,9 @@ class Pipe(GameObject):
 
         self.GAP = self.WIN_WIDTH/2.5
 
-        self.x = x
+        # if the initial distance of the pipe needs tp be bigger than the window width
+        # the variable factor is passed
+        self.x = self.WIN_WIDTH + factor*(self.WIN_WIDTH / 1.5)
         self.height = 0
 
         self.top = 0
@@ -39,6 +41,9 @@ class Pipe(GameObject):
         self.passed = False
         self.setHeight()
 
+
+
+
     def setHeight(self):
         """
         Sets the height of the top pipe and the bottom pipe
@@ -50,12 +55,17 @@ class Pipe(GameObject):
         self.bottom = self.height + self.GAP
 
 
+
+
     def update(self):
         """
 
         :return: nothing
         """
         self.x -= self.VELOCITY
+
+
+
 
     def render(self, win):
         """
@@ -65,6 +75,9 @@ class Pipe(GameObject):
         """
         win.blit(self.PIPE_TOP, (self.x, self.top))
         win.blit(self.PIPE_BOTTOM, (self.x, self.bottom))
+
+
+
 
     def collide(self, bird):
         """
@@ -88,6 +101,7 @@ class Pipe(GameObject):
 
         # if there is a collision return true, otherwise false
         return True if bottomOverlapPoint or topOverlapPoint else False
+
 
     def isOutOfScreen(self):
         return self.x + self.PIPE_TOP.get_width() < 0
