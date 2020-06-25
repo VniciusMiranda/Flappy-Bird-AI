@@ -1,2 +1,5 @@
 .idea/
 src/__pycache__
+
+src/game/__pycache__/*.pyc
+_

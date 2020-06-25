@@ -5,6 +5,7 @@ from game.Base import Base
 from game.Bird import Bird
 from game.Pipe import Pipe
 
+import neat
 import pygame
 
 # Game is a GameObject?? yeah... philosophical question right there
@@ -16,6 +17,7 @@ class Game(GameObject):
     SCALE = 1.2
     NUM_PIPES = 4
     GRAVITY = 3
+    NEAT_CONFIG_PATH = "../config-feedforward.txt"
 
     def __init__(self):
         """
@@ -46,10 +48,6 @@ class Game(GameObject):
 
         # game loop boolean
         self.bye = False
-
-        self.run()
-        pygame.quit()
-
 
     def render(self, win=None):
         """
@@ -111,7 +109,7 @@ class Game(GameObject):
         self.base.update()
 
 
-    def run(self):
+    def run(self, genomes, config):
 
         while not self.bye:
             self.CLOCK.tick(self.FPS)
@@ -142,4 +140,17 @@ class Game(GameObject):
 
             pygame.display.update()
 
+        pygame.quit()
 
+    def run_neat(self):
+        config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction,
+                                    neat.DefaultSpeciesSet, neat.DefaultStagnation,
+                                    self.NEAT_CONFIG_PATH)
+
+        population = neat.Population(self.NEAT_CONFIG_PATH)
+
+        population.add_reporter(neat.StdOutReporter(True))
+        stats = neat.StatisticsReporter()
+        population.add_reporter(stats)
+
+        winner = population.run(self.run,50)
