@@ -8,6 +8,7 @@ class Bird(GameObject):
     # static variables and constants
     MAX_ROTATION = 25
     ROT_VEL = 20
+    JUMP_VELOCITY_FACTOR = 6
 
     def __init__(self, win_width, win_height, scale, gravity):
         """
@@ -52,7 +53,7 @@ class Bird(GameObject):
         from which height the bird has jumped.
         :return: nothing
         """
-        self.velocity = -10.5
+        self.velocity = -self.JUMP_VELOCITY_FACTOR*self.SCALE
         self.tick_count = 0
 
         self.height = self.y

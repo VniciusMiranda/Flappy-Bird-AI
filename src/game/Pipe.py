@@ -21,7 +21,7 @@ class Pipe(GameObject):
 
         self.WIN_WIDTH = win_width
 
-        self.GAP = self.WIN_WIDTH/2.5
+        self.GAP = self.WIN_WIDTH/2
 
         # if the initial distance of the pipe needs tp be bigger than the window width
         # the variable factor is passed
@@ -34,7 +34,7 @@ class Pipe(GameObject):
         self.PIPE_TOP = pygame.transform.flip(self.PIPE_IMG, False, True)
 
         self.PIPE_BOTTOM = self.PIPE_IMG
-
+        self.reseted_time = 0
         self.passed = False
         self.setHeight()
 
@@ -62,9 +62,14 @@ class Pipe(GameObject):
         """
         self.x -= self.VELOCITY
 
-        # make the pipes cycle infinitely
+        # time that pass from the last reset of the pipe
+        self.reseted_time += 1
+
+        # reset the pipe to the original position and make the pipes cycle infinitely
         if self.isOutOfScreen():
-            self.x = 700
+            self.reseted_time = 0
+            self.setHeight()
+            self.x = self.WIN_WIDTH
             self.passed = False
 
 

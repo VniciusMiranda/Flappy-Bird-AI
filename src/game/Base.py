@@ -53,8 +53,8 @@ class Base(GameObject):
 
     def collide(self, bird):
         """
-        Collision testing with the bird and the base.
+        Collision testing with the bird and the base and the ceiling.
         :param bird: Bird
         :return: boolean
         """
-        return bird.image.get_height() + bird.y > self.y
+        return bird.image.get_height() + bird.y > self.y or bird.y < 0
