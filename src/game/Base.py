@@ -5,7 +5,7 @@ from game.GameObject import GameObject
 class Base(GameObject):
     VELOCITY = 5
 
-    def __init__(self, y, scale):
+    def __init__(self,win_height, scale):
         """
         Represents the base of the game, will be moving as
         well, so this class is for encapsulating the methods
@@ -16,7 +16,7 @@ class Base(GameObject):
         """
         super().__init__()
 
-        self.y = y
+        self.y = win_height - win_height / 14
 
         self.SCALE = scale
         self.IMAGE = loadImage(self.IMGS_PATH, "base.png",self.SCALE)

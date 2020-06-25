@@ -1,6 +1,7 @@
 from game.Game import Game
 import neat
 
+# net configuration function
 def run_neat(configPath, game):
     config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction,
                                 neat.DefaultSpeciesSet, neat.DefaultStagnation,
@@ -11,7 +12,6 @@ def run_neat(configPath, game):
     population.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     population.add_reporter(stats)
-
     winner = population.run( game.run, 100)
 
 if __name__ == "__main__":

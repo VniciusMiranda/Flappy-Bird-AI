@@ -15,17 +15,20 @@ import os
 # be a game object XD
 class Game(GameObject):
 
-
+    # turn to False if u don't want the lines tho
     DRAW_LINES = True
     FPS = 23
+    # change the scale of the game
     SCALE = 1.2
+    # changing this might broke some things XD
     NUM_PIPES = 2
     GRAVITY = 3
     NEAT_CONFIG_PATH = os.path.abspath(__file__).replace(os.path.basename(__file__), "") + "config-feedforward.txt"
 
     def __init__(self):
         """
-        This class encapsulate the entire Flappy bird game.
+        This class encapsulate the entire Flappy bird game
+        and the AI that will play it.
         """
         super().__init__()
 
@@ -35,12 +38,11 @@ class Game(GameObject):
 
         self.CLOCK = pygame.time.Clock()
 
-        # instantiate all the game objects
+        # declare some game object variables
         self.pipes : list
         self.base : Base
+        self.birds: list
 
-        # birds will be instantiated when game start to run so I can relate each bird to one genome
-        self.birds : list
         self.genomes : list
         self.networks : list
 
@@ -102,15 +104,15 @@ class Game(GameObject):
         every object of the game.
         :return: nothing
         """
-        frontPipeId = 0
-        if len(self.birds) > 0: frontPipeId = self.getFrontPipe()
+
+        frontPipeId = self.getFrontPipe()
 
         # update the bird
-        for birdId, bird in enumerate(self.birds):
-            self.genomes[birdId].fitness += 0.1
+        for  bird in self.birds:
+            self.genomes[self.birds.index(bird)].fitness += 0.1
             bird.update()
 
-            output = self.networks[birdId].activate((
+            output = self.networks[self.birds.index(bird)].activate((
                 bird.y,
                 abs(bird.y - self.pipes[frontPipeId].height),
                 abs(bird.y - self.pipes[frontPipeId].bottom)))[0]
@@ -130,24 +132,26 @@ class Game(GameObject):
             # test collision with the pipe
             for bird in self.birds:
                 if pipe.collide(bird):
-                    self.genomes[self.birds.index(bird)].fitness -= 1
+                    self.genomes[self.birds.index(bird)].fitness -= 1.5
                     self.networks.pop(self.birds.index(bird))
                     self.genomes.pop(self.birds.index(bird))
                     self.birds.pop(self.birds.index(bird))
 
 
 
-                # test collision with the ground
+            # test collision with the ground
+            for bird in self.birds:
                 if self.base.collide(bird):
 
                     self.networks.pop(self.birds.index(bird))
                     self.genomes.pop(self.birds.index(bird))
                     self.birds.pop(self.birds.index(bird))
 
+            for bird in self.birds:
                 # if the bird passed the pipe then congrats!!
                 if pipe.birdPassed(bird):
                     self.score.update()
-                    pipe.reseted_time = 0
+                    pipe.reset_time = 0
                     for g in self.genomes:
                         g.fitness += 5
 
@@ -171,12 +175,11 @@ class Game(GameObject):
             self.genomes.append(g)
 
 
-        self.pipes = [Pipe(self.WIN_WIDTH, self.SCALE, factor) for factor in range(self.NUM_PIPES)]
-        self.base = Base(self.WIN_HEIGHT - self.WIN_HEIGHT / 14, self.SCALE)
+        self.pipes = [Pipe(self.WIN_WIDTH,self.WIN_HEIGHT, self.SCALE, factor) for factor in range(self.NUM_PIPES)]
+        self.base = Base(self.WIN_HEIGHT, self.SCALE)
 
         while not self.bye and len(self.birds) > 0:
             self.CLOCK.tick(self.FPS)
-
 
 
             # updates and renders everything
@@ -208,5 +211,5 @@ class Game(GameObject):
 
 
     def getFrontPipe(self):
-        maxPipe = max(self.pipes, key=attrgetter('reseted_time'))
+        maxPipe = max(self.pipes, key=attrgetter('reset_time'))
         return self.pipes.index(maxPipe)

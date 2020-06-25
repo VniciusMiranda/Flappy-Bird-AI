@@ -7,7 +7,7 @@ import random
 class Pipe(GameObject):
     VELOCITY = 5
 
-    def __init__(self, win_width, scale, factor=0):
+    def __init__(self, win_width, win_height, scale, factor=0):
         """
         Pipe only have x value because the height will be random.
         Pipe class is also  both the top pipe and the bottom pipe.
@@ -20,12 +20,14 @@ class Pipe(GameObject):
         self.PIPE_IMG = loadImage(self.IMGS_PATH, "pipe.png", self.SCALE)
 
         self.WIN_WIDTH = win_width
+        self.WIN_HEIGHT = win_height
 
-        self.GAP = self.WIN_WIDTH/2
+        self.GAP = self.WIN_HEIGHT/3.2
 
         # if the initial distance of the pipe needs tp be bigger than the window width
         # the variable factor is passed
-        self.x = self.WIN_WIDTH + factor*(self.WIN_WIDTH/2)
+
+        self.x = self.WIN_WIDTH + factor*(self.WIN_WIDTH/1.5)
         self.height = 0
 
         self.top = 0
@@ -34,7 +36,7 @@ class Pipe(GameObject):
         self.PIPE_TOP = pygame.transform.flip(self.PIPE_IMG, False, True)
 
         self.PIPE_BOTTOM = self.PIPE_IMG
-        self.reseted_time = 0
+        self.reset_time = 0
         self.passed = False
         self.setHeight()
 
@@ -47,7 +49,7 @@ class Pipe(GameObject):
         randomly.
         :return:  nothing
         """
-        self.height = random.randrange(50, 450)
+        self.height = random.randrange(round(self.WIN_HEIGHT/10), round(self.WIN_HEIGHT - self.WIN_HEIGHT/14 - self.GAP))
         self.top = self.height - self.PIPE_TOP.get_height()
         self.bottom = self.height + self.GAP
 
@@ -63,11 +65,11 @@ class Pipe(GameObject):
         self.x -= self.VELOCITY
 
         # time that pass from the last reset of the pipe
-        self.reseted_time += 1
+        self.reset_time += 1
 
         # reset the pipe to the original position and make the pipes cycle infinitely
         if self.isOutOfScreen():
-            self.reseted_time = 0
+            self.reset_time = 0
             self.setHeight()
             self.x = self.WIN_WIDTH
             self.passed = False
@@ -116,7 +118,7 @@ class Pipe(GameObject):
         return self.x + self.PIPE_TOP.get_width() < 0
 
     def birdPassed(self, bird):
-        if not self.passed and self.x < bird.x:
+        if not self.passed and self.x + self.PIPE_TOP.get_width() < bird.x:
             self.passed = True
             return True
         else:

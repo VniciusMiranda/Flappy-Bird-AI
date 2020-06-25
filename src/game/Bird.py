@@ -8,7 +8,7 @@ class Bird(GameObject):
     # static variables and constants
     MAX_ROTATION = 25
     ROT_VEL = 20
-    JUMP_VELOCITY_FACTOR = 6
+    JUMP_VELOCITY_FACTOR = 6.5
 
     def __init__(self, win_width, win_height, scale, gravity):
         """
