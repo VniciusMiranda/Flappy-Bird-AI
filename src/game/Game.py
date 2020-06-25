@@ -15,6 +15,8 @@ import os
 # be a game object XD
 class Game(GameObject):
 
+
+    DRAW_LINES = True
     FPS = 23
     SCALE = 1.2
     NUM_PIPES = 2
@@ -65,9 +67,23 @@ class Game(GameObject):
         # draws the background
         win.blit(self.BG_IMG, (0, 0))
 
+        frontPipeId = self.getFrontPipe()
+
         # draws the birds
         for bird in self.birds:
             bird.render(win)
+            if self.DRAW_LINES:
+                try:
+                    pygame.draw.line(win, (255, 0, 0),
+                                     (bird.x + bird.image.get_width() / 2, bird.y + bird.image.get_height() / 2), (
+                                     self.pipes[frontPipeId].x + self.pipes[frontPipeId].PIPE_TOP.get_width() / 2,
+                                     self.pipes[frontPipeId].height), 5)
+                    pygame.draw.line(win, (255, 0, 0),
+                                     (bird.x + bird.image.get_width() / 2, bird.y + bird.image.get_height() / 2), (
+                                     self.pipes[frontPipeId].x + self.pipes[frontPipeId].PIPE_BOTTOM.get_width() / 2,
+                                     self.pipes[frontPipeId].bottom), 5)
+                except:
+                    pass
 
         # draws the pipes
         for pipe in self.pipes:
@@ -86,13 +102,13 @@ class Game(GameObject):
         every object of the game.
         :return: nothing
         """
-
-        frontPipeId = self.getFrontPipe()
+        frontPipeId = 0
+        if len(self.birds) > 0: frontPipeId = self.getFrontPipe()
 
         # update the bird
         for birdId, bird in enumerate(self.birds):
-            bird.update()
             self.genomes[birdId].fitness += 0.1
+            bird.update()
 
             output = self.networks[birdId].activate((
                 bird.y,
@@ -112,22 +128,21 @@ class Game(GameObject):
 
 
             # test collision with the pipe
-            for birdId, bird in enumerate(self.birds):
+            for bird in self.birds:
                 if pipe.collide(bird):
-                    self.genomes[birdId].fitness -= 1
-                    self.birds.pop(birdId)
-                    self.networks.pop(birdId)
-                    self.genomes.pop(birdId)
+                    self.genomes[self.birds.index(bird)].fitness -= 1
+                    self.networks.pop(self.birds.index(bird))
+                    self.genomes.pop(self.birds.index(bird))
+                    self.birds.pop(self.birds.index(bird))
 
 
 
                 # test collision with the ground
                 if self.base.collide(bird):
 
-                    self.birds.pop(birdId)
-                    self.networks.pop(birdId)
-                    self.genomes.pop(birdId)
-
+                    self.networks.pop(self.birds.index(bird))
+                    self.genomes.pop(self.birds.index(bird))
+                    self.birds.pop(self.birds.index(bird))
 
                 # if the bird passed the pipe then congrats!!
                 if pipe.birdPassed(bird):
