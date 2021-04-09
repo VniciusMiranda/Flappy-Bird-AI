@@ -1,8 +1,9 @@
+
 [NEAT]
-fitness_criterion     = max
-fitness_threshold     = 400
-pop_size              = 100
-reset_on_extinction   = False
+fitness_criterion       = max
+fitness_threshold       = 400
+pop_size                = 100
+reset_on_extinction     = False
 
 [DefaultGenome]
 # node activation options
