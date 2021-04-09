@@ -60,6 +60,7 @@ class Game(GameObject):
         # game loop boolean
         self.bye = False
 
+
     def render(self, win=None):
         """
         Game render method. Calls the render method of all objects.
@@ -96,8 +97,6 @@ class Game(GameObject):
         self.base.render(win)
 
 
-
-
     def update(self):
         """
         Game update method. It updates the state and coordinates of
@@ -120,14 +119,10 @@ class Game(GameObject):
             if output > 0.5:
                 bird.jump()
 
-
-
-
         # update the pipes
         for pipe in self.pipes:
 
             pipe.update()
-
 
             # test collision with the pipe
             for bird in self.birds:
@@ -136,8 +131,6 @@ class Game(GameObject):
                     self.networks.pop(self.birds.index(bird))
                     self.genomes.pop(self.birds.index(bird))
                     self.birds.pop(self.birds.index(bird))
-
-
 
             # test collision with the ground
             for bird in self.birds:
@@ -155,14 +148,10 @@ class Game(GameObject):
                     for g in self.genomes:
                         g.fitness += 5
 
-        # update the base
         self.base.update()
 
 
-
     def run(self, genomes, config):
-
-        # initialize the list as empty
         self.birds = []
         self.genomes = []
         self.networks = []
@@ -174,13 +163,11 @@ class Game(GameObject):
             g.fitness = 0
             self.genomes.append(g)
 
-
         self.pipes = [Pipe(self.WIN_WIDTH,self.WIN_HEIGHT, self.SCALE, factor) for factor in range(self.NUM_PIPES)]
         self.base = Base(self.WIN_HEIGHT, self.SCALE)
 
         while not self.bye and len(self.birds) > 0:
             self.CLOCK.tick(self.FPS)
-
 
             # updates and renders everything
             self.update()
@@ -201,13 +188,10 @@ class Game(GameObject):
                     if event.key == pygame.K_q:
                         self.bye = True
 
-
-
             pygame.display.update()
 
         # resets the value of the score
         self.score.value = 0
-
 
 
     def getFrontPipe(self):

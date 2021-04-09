@@ -25,6 +25,7 @@ class Base(GameObject):
         self.x1 = 0
         self.x2 = self.WIDTH
 
+
     def update(self):
         """
         Updates the coordinates and states if there are any.
@@ -50,6 +51,7 @@ class Base(GameObject):
         """
         win.blit((self.IMAGE), (self.x1, self.y))
         win.blit((self.IMAGE), (self.x2, self.y))
+
 
     def collide(self, bird):
         """

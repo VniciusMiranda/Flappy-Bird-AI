@@ -7,6 +7,7 @@ class Score:
         self.value = initialValue
         self.font = pygame.font.SysFont(font, size)
 
+
     def render(self, win):
         """
         Draws the score to the screen.
@@ -15,6 +16,7 @@ class Score:
         """
         text = self.font.render(f"score: {self.value}", 1, (255,255,255))
         win.blit(text, (self.WIN_WIDTH - 10 - text.get_width(), 10))
+
 
     def update(self):
         """

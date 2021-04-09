@@ -43,9 +43,6 @@ class Bird(GameObject):
         self.image = self.IMAGES[0]
 
 
-
-
-
     def jump(self):
         """
         Sets the velocity of the bird to a initial negative
@@ -57,8 +54,6 @@ class Bird(GameObject):
         self.tick_count = 0
 
         self.height = self.y
-
-
 
 
     def update(self):
@@ -84,7 +79,6 @@ class Bird(GameObject):
         self.tilt(d)
 
 
-
     def render(self, win):
         """
         Display the bird on the screen.
@@ -99,8 +93,6 @@ class Bird(GameObject):
         self.image = self.IMAGES[self.image_count]
 
         self.rotate(win)
-
-
 
 
     def tilt(self, distance):
@@ -123,8 +115,6 @@ class Bird(GameObject):
                 self.inclination -= self.ROT_VEL
 
 
-
-
     def rotate(self, win):
         """
         Rotates bird around the center and not the left corner.
@@ -140,8 +130,6 @@ class Bird(GameObject):
         win.blit(rotate_image, new_rect.topleft)
 
 
-
-
     def quadratic_formula(self, time, gravity):
         """
         Computes how much space the bird is moving each unit
@@ -151,8 +139,6 @@ class Bird(GameObject):
         :return: double
         """
         return self.velocity*time + (gravity / 2) * time**2
-
-
 
 
     def getMask(self):

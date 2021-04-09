@@ -41,8 +41,6 @@ class Pipe(GameObject):
         self.setHeight()
 
 
-
-
     def setHeight(self):
         """
         Sets the height of the top pipe and the bottom pipe
@@ -52,8 +50,6 @@ class Pipe(GameObject):
         self.height = random.randrange(round(self.WIN_HEIGHT/10), round(self.WIN_HEIGHT - self.WIN_HEIGHT/14 - self.GAP))
         self.top = self.height - self.PIPE_TOP.get_height()
         self.bottom = self.height + self.GAP
-
-
 
 
     def update(self):
@@ -75,9 +71,6 @@ class Pipe(GameObject):
             self.passed = False
 
 
-
-
-
     def render(self, win):
         """
         Renders the pipe on the screen.
@@ -86,8 +79,6 @@ class Pipe(GameObject):
         """
         win.blit(self.PIPE_TOP, (self.x, self.top))
         win.blit(self.PIPE_BOTTOM, (self.x, self.bottom))
-
-
 
 
     def collide(self, bird):
@@ -116,6 +107,7 @@ class Pipe(GameObject):
 
     def isOutOfScreen(self):
         return self.x + self.PIPE_TOP.get_width() < 0
+
 
     def birdPassed(self, bird):
         if not self.passed and self.x + self.PIPE_TOP.get_width() < bird.x:

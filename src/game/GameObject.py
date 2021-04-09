@@ -8,7 +8,8 @@ class GameObject:
         Defines the variables that the game objects needs to access their
         resources.
         """
-        self.RESOURCES_PATH = "../resources"
+        self.PROJECT_PATH = os.path.abspath(__file__).replace(os.path.basename(__file__), "").replace("src/game/", "")
+        self.RESOURCES_PATH = self.PROJECT_PATH + "resources"
 
 
         self.IMGS_PATH = self.RESOURCES_PATH + "/imgs/"
@@ -23,6 +24,7 @@ class GameObject:
         :return: nothing
         """
         pass
+
 
     def render(self, win):
         """
