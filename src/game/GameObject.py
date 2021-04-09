@@ -1,4 +1,5 @@
 import os
+from game.util import getCurrentDirectoryAbsPath
 
 
 class GameObject:
@@ -8,12 +9,10 @@ class GameObject:
         Defines the variables that the game objects needs to access their
         resources.
         """
-        self.PROJECT_PATH = os.path.abspath(__file__).replace(os.path.basename(__file__), "").replace("src/game/", "")
+        self.PROJECT_PATH = getCurrentDirectoryAbsPath().replace("src/game/", "")
+
         self.RESOURCES_PATH = self.PROJECT_PATH + "resources"
-
-
         self.IMGS_PATH = self.RESOURCES_PATH + "/imgs/"
-
         self.RESOURCE_IMAGES = os.listdir(self.IMGS_PATH)
 
 

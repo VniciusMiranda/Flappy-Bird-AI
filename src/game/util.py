@@ -6,6 +6,8 @@ class CouldNotLoadImageException(Exception):
     def __init__(self, message):
         super(CouldNotLoadImageException, self).__init__(message)
 
+def getCurrentDirectoryAbsPath():
+    return os.path.abspath(__file__).replace(os.path.basename(__file__), "")
 
 def loadImage( directoryPath : str, fileName : str, scale=1.0):
     """

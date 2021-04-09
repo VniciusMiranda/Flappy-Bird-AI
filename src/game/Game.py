@@ -1,5 +1,5 @@
+from game.util import getCurrentDirectoryAbsPath, loadImage
 from game.GameObject import GameObject
-from game.util import loadImage
 from game.Score import Score
 from game.Base import Base
 from game.Bird import Bird
@@ -23,7 +23,7 @@ class Game(GameObject):
     # changing this might broke some things XD
     NUM_PIPES = 2
     GRAVITY = 3
-    NEAT_CONFIG_PATH = os.path.abspath(__file__).replace(os.path.basename(__file__), "") + "config-feedforward.txt"
+    NEAT_CONFIG_PATH = getCurrentDirectoryAbsPath() + "config-feedforward.txt"
 
     def __init__(self):
         """
