@@ -77,11 +77,11 @@ class Game(GameObject):
             bird.render(win)
             if self.DRAW_LINES:
                 try:
-                    pygame.draw.line(win, (255, 0, 0),
+                    pygame.draw.line(win, (100, 25, 0),
                                      (bird.x + bird.image.get_width() / 2, bird.y + bird.image.get_height() / 2), (
                                      self.pipes[frontPipeId].x + self.pipes[frontPipeId].PIPE_TOP.get_width() / 2,
                                      self.pipes[frontPipeId].height), 5)
-                    pygame.draw.line(win, (255, 0, 0),
+                    pygame.draw.line(win, (100, 24, 0),
                                      (bird.x + bird.image.get_width() / 2, bird.y + bird.image.get_height() / 2), (
                                      self.pipes[frontPipeId].x + self.pipes[frontPipeId].PIPE_BOTTOM.get_width() / 2,
                                      self.pipes[frontPipeId].bottom), 5)
